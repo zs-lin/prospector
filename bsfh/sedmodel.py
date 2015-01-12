@@ -91,7 +91,8 @@ class SedModel(ProspectrParams):
             poly = (x[None,:] ** powers[:,None] *
                     self.params['poly_coeffs'][:,None]).sum(axis = 0)
         
-            return (1.0 + poly) * self.params['spec_norm']
+            #return (1.0 + poly) * self.params['spec_norm']
+            return self.params['spec_norm'] + poly
         else:
             return 1.0
 
