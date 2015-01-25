@@ -18,7 +18,7 @@ def query_phatcat(objname, phottable='data/f2_apcanfinal_6phot_v2.fits',
     'AP') or ALTIDs.
     """
     
-    ap = pyfits.getdata(phottable)
+    ap = pyfits.getdata(phottable, 1)
 
     if objname[0:2].upper() == 'AP':
         objname = int(objname[2:])
