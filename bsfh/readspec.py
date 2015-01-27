@@ -10,7 +10,8 @@ to_cgs = lsun/10**( np.log10(4.0*np.pi)+2*np.log10(pc*10) )
 
 def query_phatcat(objname, phottable='data/f2_apcanfinal_6phot_v2.fits',
                   crosstable=None,
-                  filtcols=['275','336','475','814','110','160']):
+                  filtcols=['275','336','475','814','110','160'],
+                  **extras):
     
     """
     Read LCJ's catalog for a certain object and return the magnitudes
@@ -84,7 +85,7 @@ def load_obs_mmt(filename=None, objname=None, #dist = 1e-5, vel = 0.0,
     ######## PHOTOMETRY ########
     if verbose:
         print('Loading mags from {0} for {1}'.format(phottable, objname))
-    mags, mags_unc, flag = query_phatcat(objname, phottable = phottable)
+    mags, mags_unc, flag = query_phatcat(objname, phottable = phottable, **kwargs)
     
     obs['filters'] = observate.load_filters(['wfc3_uvis_'+b.lower() for b in
                                              ["F275W", "F336W", "F475W", "F814W"]] +
