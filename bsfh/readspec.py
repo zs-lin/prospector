@@ -59,7 +59,7 @@ def load_obs_mmt(filename=None, objname=None, #dist = 1e-5, vel = 0.0,
     #fluxconv = np.pi * 4. * (dist * 1e6 * pc)**2 / lsun #erg/s/AA/cm^2 to L_sun/AA
     fluxconv =  1.0#5.0e-20 * scale #approximate counts to erg/s/AA/cm^2
     #redshift = 0.0 #vel / 2.998e8
-    dat = pyfits.getdata(filename)
+    dat = np.squeeze(pyfits.getdata(filename))
     hdr = pyfits.getheader(filename)
     
     crpix = (hdr['CRPIX1'] -1) #convert from FITS to numpy indexing
