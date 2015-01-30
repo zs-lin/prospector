@@ -253,7 +253,6 @@ class StellarPopBasis(object):
             self.params[k] = np.copy(np.atleast_1d(v))
 
         if self.basis_dirty | (self.ssp.params.dirtiness == 2):
-            print('rebulding basis')
             self.build_basis(self.params['outwave'])
 
 def gauss(x, mu, A, sigma):
