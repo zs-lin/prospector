@@ -235,7 +235,6 @@ class StellarPopBasis(object):
         """
         
         for k,v in inparams.iteritems():
-            print(k, v)
             if k in self.ssp_params:
                 try:
                     #here the sps.params.dirtiness should increase to 2 if there was a change
@@ -243,7 +242,6 @@ class StellarPopBasis(object):
                     if k is 'smooth_velocity':
                         if self.ssp.params.dirtiness == 1:
                             self.ssp.params.dirtiness = 2
-                    print('changing ssp')
                 except KeyError:
                     pass
             elif k in self.basis_params:
