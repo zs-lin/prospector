@@ -235,10 +235,15 @@ class StellarPopBasis(object):
         """
         
         for k,v in inparams.iteritems():
+            print(k, v)
             if k in self.ssp_params:
                 try:
                     #here the sps.params.dirtiness should increase to 2 if there was a change
-                    self.ssp.params[k] = v
+                    self.ssp.params[k] = v[0]
+                    if k is 'smooth_velocity':
+                        if self.ssp.params.dirtiness == 1:
+                            self.ssp.params.dirtiness = 2
+                    print('changing ssp')
                 except KeyError:
                     pass
             elif k in self.basis_params:
@@ -250,6 +255,7 @@ class StellarPopBasis(object):
             self.params[k] = np.copy(np.atleast_1d(v))
 
         if self.basis_dirty | (self.ssp.params.dirtiness == 2):
+            print('rebulding basis')
             self.build_basis(self.params['outwave'])
 
 def gauss(x, mu, A, sigma):
