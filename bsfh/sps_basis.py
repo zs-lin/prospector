@@ -34,7 +34,8 @@ class StellarPopBasis(object):
         
         #These are the parameters whose change will force a
         #regeneration of the SSPs (and basis) using fsps
-        self.ssp_params = ['imf_type','imf3','agb_dust', 'smooth_velocity']
+        self.ssp_params = ['imf_type','imf3','agb_dust',
+                           'smooth_velocity', 'min_wave_smooth', 'max_wave_smooth']
         self.ssp_dirty = True
         
         #These are the parameters whose change will force a
@@ -239,8 +240,8 @@ class StellarPopBasis(object):
                 try:
                     #here the sps.params.dirtiness should increase to 2 if there was a change
                     self.ssp.params[k] = v[0]
-                    if k is 'smooth_velocity':
-                        if self.ssp.params.dirtiness == 1:
+                    if 'smooth' in k:
+                        if v[0] != self.params.get(k, None):
                             self.ssp.params.dirtiness = 2
                 except KeyError:
                     pass
