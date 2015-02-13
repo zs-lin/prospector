@@ -18,9 +18,8 @@ def query_phatcat(objname, phottable='data/f2_apcanfinal_6phot_v2.fits',
     and their uncertainties. Can take either AP numbers (starting with
     'AP') or ALTIDs.
     """
-    
+    print(phottable, crosstable, objname)
     ap = pyfits.getdata(phottable, 1)
-
     if objname[0:2].upper() == 'AP':
         objname = int(objname[2:])
         ind = (ap['id'] == objname)
@@ -34,7 +33,7 @@ def query_phatcat(objname, phottable='data/f2_apcanfinal_6phot_v2.fits',
     dat = ap[ind][0]
     mags = np.array([dat['MAG'+f] for f in filtcols]).flatten()
     mags_unc = np.array([dat['SIG'+f] for f in filtcols]).flatten()
-    flags = None
+    flags = ap[ind]['id'] #return the ap number
     
     return mags, mags_unc, flags
         
@@ -116,6 +115,7 @@ def load_obs_lris(filename=None, objname=None, #dist = 1e-5, vel = 0.0,
 
     #fluxconv = np.pi * 4. * (dist * 1e6 * pc)**2 / lsun #erg/s/AA/cm^2 to L_sun/AA
     fluxconv = 1.0
+    scale = 1e0 #testing
     #redshift = vel / 2.998e8
     dat = pyfits.getdata(filename)
     hdr = pyfits.getheader(filename)
@@ -131,10 +131,10 @@ def load_obs_lris(filename=None, objname=None, #dist = 1e-5, vel = 0.0,
     ######## PHOTOMETRY ######
     if verbose:
         print('Loading mags from {0} for {1}'.format(phottable, objname))
-    mags, mags_unc, flag = query_phatcat(objname, phottable = phottable)
+    mags, mags_unc, flag = query_phatcat(objname, phottable = phottable, **kwargs)
      
     obs['filters'] = observate.load_filters(['wfc3_uvis_'+b.lower() for b in
-                                             ["F336W", "F475W", "F814W"]] +
+                                             ["F275W", "F336W", "F475W", "F814W"]] +
                                              ['wfc3_ir_'+b.lower() for b in
                                               ["F110W", "F160W"]])
     obs['maggies'] = 10**(-0.4 * (mags -
