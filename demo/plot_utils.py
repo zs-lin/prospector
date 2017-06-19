@@ -91,7 +91,7 @@ def param_evol(sample_results, showpars=None, start=0, figsize=None, chains=None
 
     # logify mass
     if 'mass' in parnames:
-        midx = [l=='mass' for l in parnames]
+        midx = np.array([l=='mass' for l in parnames])
         chain[:,:,midx] = np.log10(chain[:,:,midx])
         parnames[midx] = 'logmass'
 
@@ -172,7 +172,7 @@ def subtriangle(sample_results, outname=None, showpars=None,
 
     # logify mass
     if 'mass' in parnames:
-        midx = [l=='mass' for l in parnames]
+        midx = np.array([l=='mass' for l in parnames])
         flatchain[:,midx] = np.log10(flatchain[:,midx])
         parnames[midx] = 'logmass'
 
